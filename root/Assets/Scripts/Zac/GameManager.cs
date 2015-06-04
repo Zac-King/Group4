@@ -3,11 +3,6 @@ using System.Collections;
 using System.Collections.Generic; 
 public class GameManager : Singleton<GameManager>
 {
-    //[horizontalLine]
-    [HideInInspector]
-    public List<string> Levels = new List<string>();
-
-    public AnimationCurve curve;
     // Game State possible  : <Enum>
     public enum StateManager 
     { 
@@ -15,15 +10,6 @@ public class GameManager : Singleton<GameManager>
         MAINMENU,
         RUNNING,
         EXIT
-    };
-    // Different Level      : <Enum>
-    public enum Level
-    {
-        MainMenu,
-        Level1,
-        Level2,
-        Level3,
-        Conclusion,
     }
     // Pause State rate     : <Enum>
     public enum PauseState
@@ -32,13 +18,22 @@ public class GameManager : Singleton<GameManager>
         Half,       // Update at half speed
         None,       // Update rate not effected
     }
+    [SerializeField]
+    //public List<LevelStruct> Level = new List<LevelStruct>();
+    public List<string> Levels = new List<string>();
 
     private bool transitionPossible;
     private StateManager c_GameState;
-    private Level        c_Level;
     private PauseState   c_PauseState;
-    
+     
+    /// 
+    // 
 
+    [ContextMenu("reset levels")]
+    public void ResetLevels()
+    {
+        Levels = new List<string>();
+    }
     protected override void Awake()
     {
         transitionPossible = true;
@@ -46,64 +41,9 @@ public class GameManager : Singleton<GameManager>
         base.Awake();           
     }
 
-    public void PopulateArray()
-    {
-        print("print that array");
-    }
-
-    [ContextMenu("do the thing i said to do")]
-    public void doIt()
-    {
-        GameObject blah = new GameObject();
-        blah.name = "doit";
-        Instantiate(blah);
-        print("do it dude make a go");
-    }
-
-    public void PopulateArray(string go)
-    {
-        Levels.Add(go);
-        print(curve.Evaluate(0.5f));
-    }
     /// usage: GameManager.instance.Transition("Combat")
-    public void Transition(Level lev)
+    public void Transition(string lev)
     {
-        switch(lev)
-        {
-            case Level.MainMenu:
-                if(CheckTransition(StateManager.MAINMENU))
-                {
-                    Application.LoadLevel(Levels[(int)Level.MainMenu]);
-                    c_GameState = StateManager.MAINMENU;
-                }
-                break;
-            case Level.Level1:
-                if (CheckTransition(StateManager.INIT))
-                {
-                    Application.LoadLevel(Levels[(int)Level.Level1]);
-                    c_GameState = StateManager.INIT;
-                }
-                break;
-            case Level.Level2:
-                if (CheckTransition(StateManager.INIT))
-                {
-                    Application.LoadLevel(Levels[(int)Level.Level2]);
-                    c_GameState = StateManager.INIT;
-                }
-                break;
-            case Level.Level3:
-                if (CheckTransition(StateManager.INIT))
-                {
-                    Application.LoadLevel(Levels[(int)Level.MainMenu]);
-                    c_GameState = StateManager.INIT;
-                }
-                break;
-            case Level.Conclusion:
-                if(CheckTransition(StateManager.EXIT))
-                    Application.LoadLevel(Levels[(int)Level.Conclusion]);
-                break;
-            default: break;
-        } 
         
         print("hit");   // test
         print(Application.loadedLevelName);
@@ -139,7 +79,7 @@ public class GameManager : Singleton<GameManager>
                     if (stateB == StateManager.EXIT)
                         return true;
                     break;
-
+                // Default
                 default:
                     break;
             }
@@ -147,27 +87,11 @@ public class GameManager : Singleton<GameManager>
             return false;
         }
     }
-    
-
-	// Use this for initialization
-	void Start () 
-    {
-        c_GameState  = StateManager.MAINMENU;
-        c_PauseState = PauseState.None;
-	}
-	
-	// Update is called once per frame
-	void Update () 
-    {
-
-        
-
-	}
 
     public void Pause(PauseState state)
     {
         string debugtext = "Blank";
-        switch(state)
+        switch (state)
         {
             case PauseState.None:
                 { Time.timeScale = 1; debugtext = "Full Update"; }
@@ -184,5 +108,25 @@ public class GameManager : Singleton<GameManager>
         print("Pause function hit. State triggered: " + debugtext);
     }
 
-    
+	// Use this for initialization
+	void Start () 
+    {
+        c_GameState  = StateManager.MAINMENU;
+        c_PauseState = PauseState.None;
+	}
+	
+	// Update is called once per frame
+	void Update () 
+    {
+
+	}
+
+    [ContextMenu("do the thing i said to do")]
+    public void doIt()
+    {
+        GameObject blah = new GameObject();
+        blah.name = "doit";
+        Instantiate(blah);
+        print("do it dude make a go");
+    }
 }

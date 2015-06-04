@@ -111,11 +111,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 293627362}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdfdebfeaff52b0488592a57aaba2343, type: 3}
+  m_Script: {fileID: 11500000, guid: fbc8adaac314c2847ac84a2820475e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 
-  id: 0
+  refToDB: {fileID: 0}
+  nameQueryLabel: {fileID: 0}
+  idQueryLabel: {fileID: 0}
+  blah: shel
 --- !u!4 &293627364
 Transform:
   m_ObjectHideFlags: 0

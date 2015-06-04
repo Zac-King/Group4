@@ -16,6 +16,7 @@ public class PlayerStats : Stats
         m_Acc = 3;
         m_Def = 10;
         m_Speed = 5;
+        m_Dam = 5;
         m_MaxHealth = 100;
         m_HealthRegen = 5;
         m_Health = m_MaxHealth;
@@ -64,5 +65,6 @@ public class PlayerStats : Stats
         m_Speed         += (int)Mathf.Log(m_Speed);
         m_Def           += (int)Mathf.Log(m_Def);
         m_Acc           += (int)Mathf.Log(m_Acc);
+        m_Dam           += (int)Mathf.Log(m_Dam);
     }
 }

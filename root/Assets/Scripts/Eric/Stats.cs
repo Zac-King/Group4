@@ -8,7 +8,7 @@ public class Stats : MonoBehaviour
     //Health related
     public float m_MaxHealth, m_Health, m_HealthRegen;
     //Generic
-    public float m_Def, m_Speed, m_Acc;
+    public float m_Def, m_Speed, m_Acc, m_Dam;
 
     //How the experience needed is incrimented per level
     public enum GrowthType

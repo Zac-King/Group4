@@ -13,12 +13,12 @@ public class TestController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.V))
-            s.GetComponent<TestGUI>().GuiONOFF(true);
-        if (Input.GetKeyDown(KeyCode.X))
-            s.GetComponent<TestGUI>().GuiONOFF(false);
+    //void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.V))
+    //        s.GetComponent<GUIManager>().SetState(true);
+    //    if (Input.GetKeyDown(KeyCode.X))
+    //        s.GetComponent<GUIManager>().GetState(false);
         
-    }
+    //}
 }

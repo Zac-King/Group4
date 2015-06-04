@@ -120,8 +120,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mySpeed: 10
-  maxDistance: 0
-  isFired: 0
+  maxDistance: 10
+  isFired: 1
 --- !u!135 &13524286
 SphereCollider:
   m_ObjectHideFlags: 1

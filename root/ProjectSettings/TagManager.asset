@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Item
   - Fire
+  - Target
+  - AA
+  - One Barrel
+  - ShotGunShell
   layers:
   - Default
   - TransparentFX

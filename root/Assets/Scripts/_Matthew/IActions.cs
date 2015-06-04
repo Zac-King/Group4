@@ -8,6 +8,5 @@ public interface IActions
     void Slap();
     void Jump();
     void Shoot();
-    
 }
  

@@ -19,7 +19,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
             if (_instance == null)
             {
                 _instance = GameObject.FindObjectOfType<T>();
-                DontDestroyOnLoad(_instance.gameObject);
+                DontDestroyOnLoad(_instance.gameObject); // This line of Code is making a lot of trouble for me.
             }
 
             return _instance;
