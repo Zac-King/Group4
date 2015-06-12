@@ -10,6 +10,6 @@ public interface IActions
 
 public interface TActions
 {
-    void reload();
+    void Reload();
 }
  

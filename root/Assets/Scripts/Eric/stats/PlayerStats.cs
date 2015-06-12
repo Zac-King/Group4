@@ -11,6 +11,7 @@ public class PlayerStats : Stats
 
 	void Start()
     {
+        isPlayer = true;
         m_MaxHealth = 100;
         m_HealthRegen = 5;
         m_Health = m_MaxHealth;
@@ -34,24 +35,4 @@ public class PlayerStats : Stats
 
         m_preaviousHealth = m_Health;
     }
-
-    //Increses player's stats when called
-    //override protected void LevelUp()
-    //{
-    //    m_Exp = 0;
-    //    m_Level += 1;
-
-    //    switch(cGrowthType)
-    //    {
-    //    case GrowthType.LOG:
-    //        m_ExpNeeded += Mathf.Log(m_ExpNeeded);
-    //        break;
-    //    case GrowthType.EXPNENTIAL:
-    //        m_ExpNeeded = (m_Level * m_Level) * 100;
-    //        break;
-    //    }
-
-    //    m_HealthRegen   += (int)Mathf.Log(m_HealthRegen);
-    //    m_MaxHealth     += (int)Mathf.Log(m_MaxHealth);
-    //}
 }

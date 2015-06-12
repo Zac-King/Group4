@@ -8,13 +8,16 @@ public class EnemyStats : Stats
     public GameObject Item;
     public bool m_PowerLevel;
     public int m_pLvl;
+    public bool validTarget = false;
+    public bool Shootable = false;
 
+    public float dieTimer, dieDelay;
 
     void Start()
     {
-        m_MaxHealth = 100;
+        isEnemy = true;
+        Shootable = true;
         m_Health = m_MaxHealth;
-
         m_PowerLevel = false;
     }
 
@@ -25,37 +28,34 @@ public class EnemyStats : Stats
 
     void Update()
     {
-        //if (m_PowerLevel)
-        //    PowerLevel(m_pLvl);
-
+ 
         if (m_Health < 0)
         {
             m_Health = 1;
             Die();
+            Shootable = false;
         }
 
-        if(gameObject.CompareTag("Dead"))
+        if(!Shootable)
         {
+            GetComponent<Animator>().enabled = false;
+            GetComponent<NavMeshAgent>().speed = 0;
             if (transform.eulerAngles.x < 80)
-            {
-               // print(transform.rotation.x);
-                transform.Rotate(Vector3.right * Time.deltaTime * 50);
-                //transform.Rotate(Vector3.right, 25.0f);
+            { 
+                transform.Rotate(Vector3.right * Time.deltaTime * 50); 
             }
             else
             {
-               
+                dieTimer += Time.deltaTime;
             }
+
+            if (dieTimer >= dieDelay)
+            {
+                Destroy(gameObject);
+            }
+
         }
     }
-
-    //void PowerLevel(int lvl)
-    //{
-    //    while (m_Level < lvl)
-    //        LevelUp();
-
-    //    m_PowerLevel = false;
-    //}
 
     void Die()
     {
@@ -66,8 +66,7 @@ public class EnemyStats : Stats
         {
             DropPos.x += Random.Range(-.5f, .51f);
             DropPos.z += Random.Range(-.5f, .51f);
-            DropPos.y = gameObject.transform.position.y;
-
+            DropPos.y = gameObject.transform.position.y; 
 
             GameObject _specialDrop, _item, _regDrop;
 
@@ -75,33 +74,22 @@ public class EnemyStats : Stats
             if (j == 7)
             {
                _specialDrop = Instantiate(sDrop, DropPos, transform.rotation) as GameObject;
-               _specialDrop.name = "enemy";
+               _specialDrop.name = "Enemy";
             }
             //rolled a 10 spawn an item
             else if (j == 10)
             {
                 _item = Instantiate(Item, DropPos, transform.rotation) as GameObject;
-                _item.GetComponent<Rigidbody>().AddForce(Vector3.up * 300);
-                //_item.name = _item.GetComponent<EquipmentStats>().name;
-                
-
+                _item.GetComponent<Rigidbody>().AddForce(Vector3.up * 300);    
             }
 
             else
             {
                 _regDrop = Instantiate(Drop, DropPos, transform.rotation) as GameObject;
                 _regDrop.GetComponent<Rigidbody>().AddForce(Vector3.up * 300);
-                _regDrop.name = "defaultScrak" + j.ToString();
+                _regDrop.name = "Scrap" + j.ToString();
             }
         }
-
-
-        GetComponent<Animator>().enabled = false;
-        GetComponent<NavMeshAgent>().enabled = false;
-        GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>().enabled = false;
-        tag = "Dead";
-        
-
-        //Destroy(gameObject);
+ 
     }
 }
