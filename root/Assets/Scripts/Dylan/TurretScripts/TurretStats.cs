@@ -24,28 +24,24 @@ public class TurretStats : Stats
 
 
     // Use this for initialization
-    void Start(e_TurretType type)
+    void Start()
     {
-        m_MaxHealth = 100;
-        m_Health = m_MaxHealth;
-        switch(type)
-        {
-            case e_TurretType.e_MachineGun:
-                m_maxAmmo = 30;
-                break;
-            case e_TurretType.e_AntiAir:
-                m_maxAmmo = 100;
-                break;
-            case e_TurretType.e_ShotGun:
-                m_maxAmmo = 5;
-                break;
-        }
-        m_Ammo = m_maxAmmo;
+        //m_MaxHealth = 100;
+        //m_Health = m_MaxHealth;
+        //switch(type)
+        //{
+        //    case e_TurretType.e_MachineGun:
+        //        m_maxAmmo = 30;
+        //        break;
+        //    case e_TurretType.e_AntiAir:
+        //        m_maxAmmo = 100;
+        //        break;
+        //    case e_TurretType.e_ShotGun:
+        //        m_maxAmmo = 5;
+        //        break;
+        //}
+        //m_Ammo = m_maxAmmo;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
 
-    }
 }

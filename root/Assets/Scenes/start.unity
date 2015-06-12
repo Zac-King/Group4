@@ -912,19 +912,19 @@ Prefab:
       objectReference: {fileID: 1588579692}
     - target: {fileID: 22463642, guid: b235eded49217b947b3ed5b580f60303, type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22463642, guid: b235eded49217b947b3ed5b580f60303, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22455106, guid: b235eded49217b947b3ed5b580f60303, type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22455106, guid: b235eded49217b947b3ed5b580f60303, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b235eded49217b947b3ed5b580f60303, type: 2}
@@ -1070,6 +1070,12 @@ MonoBehaviour:
   m_MaxHealth: 0
   m_Health: 0
   m_HealthRegen: 0
+  m_maxAmmo: 0
+  m_Ammo: 0
+  isPlayer: 0
+  isEnemy: 0
+  isTurret: 0
+  isGoal: 0
 --- !u!1001 &1244172846
 Prefab:
   m_ObjectHideFlags: 0
