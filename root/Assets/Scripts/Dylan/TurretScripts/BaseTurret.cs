@@ -22,7 +22,6 @@ public class BaseTurret : Stats
     int looper = 1;
 
     public bool isTargetInRadius = false; //checks to see if the target is in the radius of the turret
-    public bool isReloading = false;
 
     public bool validTarget = false;
     private Quaternion rotationToGoal;
