@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnemyStates : MonoBehaviour {
+public class EnemyStates : MonoBehaviour
+{
 
     NavMeshAgent enemy;
     private GameObject target;

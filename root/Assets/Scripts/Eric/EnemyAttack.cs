@@ -3,15 +3,19 @@ using System.Collections;
 
 public class EnemyAttack : MonoBehaviour
 {
-    private float damage = 100;
+    private float damage = 10;
 
     void OnTriggerStay (Collider other)
     {
-        if (other.CompareTag("Player") ||
-            other.CompareTag("Turret") ||
-            other.CompareTag("Goal") )
+        print("1");
+        if (other.GetComponent<Stats>())
         {
-            other.GetComponent<Stats>().m_Health -= (damage * Time.deltaTime);
+            print("2");
+            if (other.GetComponent<Stats>().isPlayer || other.GetComponent<Stats>().isTurret)
+            {
+                print("3");
+                other.GetComponent<Stats>().m_Health -= (damage * Time.deltaTime);
+            }
         }
     }
 }
