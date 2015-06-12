@@ -178,6 +178,10 @@ public class HUDManager : Singleton<HUDManager>
         turrent.GetComponent<Text>().text = tur.ToString("#.#");
     }
 
+    public void ChosenTurHUD(int tur)
+    {
+        curTurrent.GetComponent<Text>().text = tur.ToString("#.#");
+    }
     
 
  
