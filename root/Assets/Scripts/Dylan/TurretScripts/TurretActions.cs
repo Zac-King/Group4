@@ -116,6 +116,8 @@ public class TurretActions : MonoBehaviour, TActions
                 t_Fire(GetComponentInParent<TurretStats>().type);
         }
 
+
+
         if (GetComponentInParent<TurretStats>().isReloading == true)
         {
             Debug.Log("No Ammo");

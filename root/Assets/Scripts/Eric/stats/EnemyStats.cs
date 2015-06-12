@@ -15,7 +15,7 @@ public class EnemyStats : Stats
     void Start()
     {
         isEnemy = true;
-        shootable = true;
+        isShootable = true;
         m_Health = m_MaxHealth;
         m_PowerLevel = false;
     }
@@ -32,7 +32,7 @@ public class EnemyStats : Stats
         {
             m_Health = 1;
             Die();
-            shootable = false;
+            isShootable = false;
         }
 
         if (m_Health > 1 && GetComponent<Animator>().enabled == false)
@@ -40,7 +40,7 @@ public class EnemyStats : Stats
             Destroy(gameObject);
         }
 
-        if (!shootable)
+        if (!isShootable)
         {
             GetComponent<Animator>().enabled = false;
             GetComponent<NavMeshAgent>().speed = 0;
