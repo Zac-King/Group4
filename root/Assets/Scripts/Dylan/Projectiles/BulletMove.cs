@@ -27,12 +27,10 @@ public class BulletMove : MonoBehaviour
         if(c.tag == "Enemy")
         {
             doDmg = true;
-            Debug.Log(doDmg);
             Destroy(gameObject);
             if (doDmg == true)
             {
                 c.GetComponent<EnemyStats>().m_Health -= bDamage;
-                Debug.Log("Im dying");
             }
         }
     }
@@ -94,7 +92,6 @@ public class BulletMove : MonoBehaviour
             if (myDist > maxDistance)
             {
                 Destroy(gameObject);
-                print("Obj Gone");
                 //checks to see if the bullet has passed the maximum distance it can travel
                 //and if it dis destroy the object
             }
