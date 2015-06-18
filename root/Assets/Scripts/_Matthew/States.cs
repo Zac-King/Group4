@@ -35,3 +35,13 @@ public enum LevelState
     combat,
     exit,
 }
+
+public enum GameStates
+{
+    init,
+    mainMenu, 
+    gamePlay,
+    pause,
+    gameOver,
+    close,
+}
