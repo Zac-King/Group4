@@ -119,9 +119,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb0520cc8d5fd34498160da05d44f89b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BB: []
   enemy: {fileID: 0}
   throwPower: 25
-  bDamage: 9000
+  bDamage: 10
   isFired: 1
   doDmg: 0
 --- !u!135 &13524286
