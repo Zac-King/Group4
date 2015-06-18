@@ -10,7 +10,8 @@ public class FixExit : MonoBehaviour {
         HUDManager.instance.SetState("menu",   false);
         HUDManager.instance.SetState("finish", true);
         print("fix exit");
-	
+        //GameManager.instance.Pause(GameManager.PauseState.Full);
+
 	}
 	
 }

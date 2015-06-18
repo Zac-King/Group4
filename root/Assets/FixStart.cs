@@ -11,6 +11,9 @@ public class FixStart : MonoBehaviour
         HUDManager.instance.SetState("panel",  false);
         HUDManager.instance.SetState("menu",   false);
         HUDManager.instance.SetState("finish", false);
+
+       // GameManager.instance.Pause(GameManager.PauseState.None);
+
     }
 
 
