@@ -88,4 +88,9 @@ public class TurretFSM
             return cState;
         }
     }
+
+    internal void t_ChangeState(TurretState state)
+    {
+        throw new System.NotImplementedException();
+    }
 }
