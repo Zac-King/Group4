@@ -1781,6 +1781,7 @@ MonoBehaviour:
   m_PowerLevel: 0
   m_pLvl: 0
   validTarget: 0
+  c_EState: 0
   dieTimer: 0
   dieDelay: 3
 --- !u!114 &11431764

@@ -10,6 +10,8 @@ public class EnemyStats : Stats
     public int m_pLvl;
     public bool validTarget = false;
 
+    public EnemyState c_EState;
+
     public float dieTimer, dieDelay;
 
     void Start()
@@ -22,10 +24,10 @@ public class EnemyStats : Stats
         transform.localScale *= Random.Range(1f, 2f);
     }
 
-    void TakeDamage(int amount, Vector3 hitPoint)
-    {
-        m_Health -= amount;
-    }
+    //void TakeDamage(int amount, Vector3 hitPoint)
+    //{
+    //    m_Health -= amount;
+    //}
 
     void Update()
     {
@@ -63,11 +65,12 @@ public class EnemyStats : Stats
         }
     }
 
-    // What happends when the entiyi dies
+    // What happends when the entity dies
     void Die()
     {
         int i = Random.Range(3, 6);
         Vector3 DropPos = gameObject.transform.position;
+        c_EState = EnemyState.Dead;
 
         for (int j = 1; j <= i; j++)
         {

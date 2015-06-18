@@ -14,12 +14,9 @@ public class TurretActions : MonoBehaviour, TActions
 
     public void Reload()
     {
-        if (t_fsm.TurretActions["reload"] == true)
-        {
-            GetComponent<TurretStats>().m_Ammo = GetComponent<TurretStats>().m_maxAmmo;
-            GetComponent<TurretStats>().isReloading = false;
-            GetComponent<TurretStats>().turretView.GetComponent<FieldOfView>().isTargetInView = true;
-        }   
+        GetComponentInParent<TurretStats>().m_Ammo = GetComponentInParent<TurretStats>().m_maxAmmo;
+        GetComponentInParent<TurretStats>().isReloading = false;
+        GetComponentInParent<TurretStats>().turretView.GetComponent<FieldOfView>().isTargetInView = true;
     }
 
     public void t_State(TurretState state)
@@ -39,7 +36,8 @@ public class TurretActions : MonoBehaviour, TActions
     void t_Fire(TurretStats.e_TurretType type)
     {
         if (GetComponentInParent<TurretStats>().m_Ammo != 0 &&
-            GetComponentInParent<TurretStats>().turretView.GetComponent<FieldOfView>().isTargetInView == true)
+            GetComponentInParent<TurretStats>().turretView.GetComponent<FieldOfView>().isTargetInView == true &&
+            GetComponentInParent<TurretStats>().target.GetComponent<EnemyStats>().isShootable == true)
         {
             t_State(TurretState.shoot);
             GetComponentInParent<TurretStats>().bullet.GetComponent<BulletMove>().isFired = true;
@@ -109,7 +107,6 @@ public class TurretActions : MonoBehaviour, TActions
             GetComponentInParent<TurretStats>().turretView.GetComponent<FieldOfView>().isTargetInView == true)
         {
             t_State(TurretState.patrol);
-            Debug.Log("Hit Me");
             t_DistanceToTarget();
             transform.rotation = Quaternion.Lerp(transform.rotation, GetComponentInParent<TurretStats>().rotationToGoal, Time.deltaTime * GetComponentInParent<TurretStats>().rotationSpeed);
 
@@ -121,7 +118,6 @@ public class TurretActions : MonoBehaviour, TActions
 
         if (GetComponentInParent<TurretStats>().isReloading == true)
         {
-            Debug.Log("No Ammo");
             Reload();
         }
     }
