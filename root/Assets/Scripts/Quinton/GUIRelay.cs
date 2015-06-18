@@ -6,18 +6,7 @@ public class GUIRelay : MonoBehaviour
 
     public void loadLevelRelay(string lvl)
     {
-       // GameManager
+        GameManager.instance.Transition(lvl);
     }
 
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }
