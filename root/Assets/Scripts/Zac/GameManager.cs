@@ -9,7 +9,9 @@ public class GameManager : Singleton<GameManager>
     public List<string> Levels = new List<string>();
 
     private bool transitionPossible;
+    [SerializeField]
     private GameStates c_GameState;
+    [SerializeField]
     private PauseState c_PauseState;
 
     /// Quick reset of levels List to empty
@@ -23,6 +25,7 @@ public class GameManager : Singleton<GameManager>
     {
         transitionPossible = true;
         c_GameState = GameStates.init;
+       
         base.Awake();
     }
 
@@ -34,15 +37,52 @@ public class GameManager : Singleton<GameManager>
     }
 
     /// usage: GameManager.instance.Transition("Combat")
-    public void Transition(string lev, GameStates toState)
+    public void Transition(string lev)
     {
-        if(CheckTransition(toState) == true)
+        print("hit");
+        if (lev == "start" || lev == "Start")
         {
-            print("Transition hit");
-            LevelLoader.instance.loadLevel(lev);
-            print(Application.loadedLevelName);
+            if (CheckTransition(GameStates.mainMenu) == true)
+            {
+                print("Transition hit");
+                LevelLoader.instance.loadLevel("start");
+                print(Application.loadedLevelName);
+            }
         }
-            
+
+        if (lev == "arena" || lev == "Arena")
+        {
+            if (CheckTransition(GameStates.gamePlay))
+            {
+                print("Transition hit");
+                LevelLoader.instance.loadLevel("Arena");
+                print(Application.loadedLevelName);
+            }
+        }
+
+        if (lev == "exit" || lev == "Exit")
+        {
+            if (CheckTransition(GameStates.gameOver) == true)
+            {
+                print("Transition hit");
+                LevelLoader.instance.loadLevel("exit");
+                print(Application.loadedLevelName);
+            }
+        }
+
+        if (lev == "close" || lev == "Close" || lev == "quit" || lev == "Quit")
+        {
+            if (CheckTransition(GameStates.close) == true)
+            {
+                print("Transition hit");
+                LevelLoader.instance.loadLevel("quit");
+            }
+        }
+        
+        else
+        {
+            print("No Transition");
+        }
     }
 
     private bool CheckTransition(GameStates stateB)
@@ -58,6 +98,7 @@ public class GameManager : Singleton<GameManager>
         {
             switch (c_GameState)
             {
+                    
                 case GameStates.init:
                     if (stateB == GameStates.mainMenu)
                         return true;
@@ -95,6 +136,8 @@ public class GameManager : Singleton<GameManager>
                     break;
             }
             // if not valid path return false
+
+            print("invalid trans from " + c_GameState + " ---> " + stateB);
             print("Transistion Check Failed. Check returned: False");
             return false;
         }
