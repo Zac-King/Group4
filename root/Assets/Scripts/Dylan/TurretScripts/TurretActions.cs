@@ -68,7 +68,7 @@ public class TurretActions : MonoBehaviour, TActions
 
                 GetComponentInParent<TurretStats>().t_cycle++;
 
-                switch (GetComponentInParent<TurretStats>().t_cycle++ % 7)
+                switch (GetComponentInParent<TurretStats>().t_cycle % 7)
                 {
                     case 1: spawnPos = GetComponentInParent<TurretStats>().barrelPos[0].position; break;
                     case 2: spawnPos = GetComponentInParent<TurretStats>().barrelPos[1].position; break;

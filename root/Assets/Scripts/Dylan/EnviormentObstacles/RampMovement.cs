@@ -15,14 +15,13 @@ public class RampMovement : MonoBehaviour
 
 	// Use this for initialization
 	void Start () {
-	
+        delay = Random.Range(10, 30);
 	}
 	
 	// Update is called once per frame
 	void Update () 
     {
         Timer += Time.deltaTime;
-        delay = 5;
 
         if (Timer > delay && isActive == true)
         {
