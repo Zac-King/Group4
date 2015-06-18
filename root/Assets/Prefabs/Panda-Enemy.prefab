@@ -1776,13 +1776,13 @@ MonoBehaviour:
   isShootable: 0
   isReloading: 0
   Drop: {fileID: 175452, guid: 818bedb0d243d0e45968f476d7fdd987, type: 2}
-  sDrop: {fileID: 169020}
-  Item: {fileID: 126532, guid: db626a9d5c972ea41bb7b9705fa27170, type: 2}
+  sDrop: {fileID: 175452, guid: 818bedb0d243d0e45968f476d7fdd987, type: 2}
+  Item: {fileID: 175452, guid: 818bedb0d243d0e45968f476d7fdd987, type: 2}
   m_PowerLevel: 0
   m_pLvl: 0
   validTarget: 0
   dieTimer: 0
-  dieDelay: 0
+  dieDelay: 3
 --- !u!114 &11431764
 MonoBehaviour:
   m_ObjectHideFlags: 1

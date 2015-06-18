@@ -3,28 +3,26 @@ using System.Collections;
 
 public class SpawnEnemy : MonoBehaviour
 {
-    public GameObject a;
+    public GameObject enemy;
 
-    public GameObject progess;
+    public Transform[] spawnPoints;
+
     private float m_Timer;
     public float  SpawnDelay;
 
-    int enemyCount = 0;
-
     void Start()
     {
-        m_Timer = 0;
-        SpawnDelay = 3;
     }
 
 	void Update ()
     {
         m_Timer += Time.deltaTime;
-        if (m_Timer >= SpawnDelay && enemyCount <= progess.GetComponent<LevelProgression>().numOfEnemies)
+
+        if (m_Timer >= SpawnDelay)
         {
-            Instantiate(a, gameObject.transform.position, gameObject.transform.rotation);
             m_Timer = 0;
-            enemyCount = enemyCount + 1;
+            int pos = Random.Range(0, spawnPoints.Length);
+            Instantiate(enemy, spawnPoints[pos].position, transform.rotation);
         }
 	}
 }
