@@ -9,7 +9,7 @@ public class AI : AICharacterControl
 	void Start ()
     {
         goal = GameObject.FindObjectOfType<GoalStats>().gameObject;
-        target = goal.transform;
+        GetComponent<AICharacterControl>().target = goal.transform;
 	}
 	
 	// Update is called once per frame
@@ -20,7 +20,7 @@ public class AI : AICharacterControl
 
     void OnTriggerStay (Collider other)
     {
-        if (other.GetComponent<Stats>())
+        if (other.GetComponent<Stats>() && !other.GetComponent<Stats>().isEnemy)
         {
             if (other.GetComponent<Stats>().isPlayer)
             {
