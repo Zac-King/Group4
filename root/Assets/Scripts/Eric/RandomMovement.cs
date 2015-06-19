@@ -19,12 +19,12 @@ public class RandomMovement : MonoBehaviour
         m_timer += Time.deltaTime;
 
         // move forward by z axis
-        rb.AddForce(Vector3.up * Random.Range(-1.0f, 1.0f) *  gameObject.GetComponent<EnemyStats>().m_Speed);
+       // rb.AddForce(Vector3.forward * Random.Range(-1.0f, 1.0f) *  gameObject.GetComponent<EnemyStats>().m_Speed);
 
         if (m_timer >= m_delay)
         {
-            // rotate randomly by y axis
-            rb.AddForce(Vector3.right * Random.Range(-1.0f, 1.0f) * 10);
+            // rotate randomly by x axis
+          //  rb.AddForce(Vector3.right * Random.Range(-1.0f, 1.0f) * 10);
             m_timer = 0;
         }
 	}

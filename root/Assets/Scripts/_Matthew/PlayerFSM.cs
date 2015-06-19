@@ -7,12 +7,13 @@ using System.Collections.Generic;
 public class PlayerFSM
 {
     bool canSlap, canJump, canShoot, placeTurret;
-    Dictionary<string, bool> ActionDict;
+    public Dictionary<string, bool> ActionDict;
     /// <summary>
     /// on construction we will initialize our action list
     /// </summary>
     public PlayerFSM()
     {
+        //please work
         canSlap = false;
         canJump = false;
         canShoot = false;
@@ -23,17 +24,12 @@ public class PlayerFSM
         ActionDict.Add("jump", canJump);
         ActionDict.Add("shoot", canShoot);
         ActionDict.Add("placeTurret", placeTurret);
-        
     }
 
     /// <summary>
     /// what we want to happen when we are in the current state
     /// </summary>
     /// <param name="state"></param>
-    private IEnumerator HandleState(PlayerState state)
-    {
-        yield return null;
-    }
 
     private void HandleTransition(PlayerState state)
     {
@@ -56,6 +52,9 @@ public class PlayerFSM
                     ActionDict["slap"] = false; //cant slap but can do everyting else in the dictionary
                     ActionDict["placeTurret"] = false;
                     break;
+                case PlayerState.dead:
+                    ActionDict[Key] = false; //cant do everything in the dictionary
+                    break;
             }
         }
 
@@ -76,11 +75,10 @@ public class PlayerFSM
     /// </returns>
     private bool CheckTransition(PlayerState from, PlayerState to)
     {
-
         switch (from)
         {
             case PlayerState.init:
-                if (to == PlayerState.idle)
+                if (to == PlayerState.idle || to == PlayerState.dead)
                 {
                     cState = to;
                     return true;
@@ -88,7 +86,7 @@ public class PlayerFSM
                 break;
 
             case PlayerState.idle:
-                if (to == PlayerState.walk)
+                if (to == PlayerState.walk || to == PlayerState.dead)
                 {
                     cState = to;
                     return true;
@@ -96,7 +94,7 @@ public class PlayerFSM
                 break;
 
             case PlayerState.walk:
-                if (to == PlayerState.run || to == PlayerState.idle)
+                if (to == PlayerState.run || to == PlayerState.idle || to == PlayerState.dead)
                 {
                     cState = to;
                     return true;
@@ -104,7 +102,7 @@ public class PlayerFSM
                 break;
 
             case PlayerState.run:
-                if (to == PlayerState.walk)
+                if (to == PlayerState.walk || to == PlayerState.dead)
                 {
                     cState = to;
                     return true;

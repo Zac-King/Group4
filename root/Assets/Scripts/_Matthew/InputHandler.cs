@@ -2,118 +2,196 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class InputHandler : MonoBehaviour 
+public class InputHandler : MonoBehaviour
 {
     private GameObject player;
+    private GameObject turretManager;
+    [SerializeField]
     private GameObject turret;
-    public GameObject levelLoader; // Test Only
+    private GameObject Enemy;
+    private GameObject goal;
 
-    public KeyCode halfPause =  KeyCode.C;
-    public KeyCode pause     =  KeyCode.X;
-    public KeyCode unpause   =  KeyCode.Z;
-    public KeyCode slap      =  KeyCode.F;
-    public KeyCode shoot     =  KeyCode.V;
 
-    public KeyCode tTurret1 =   KeyCode.Alpha1;
-    public KeyCode tTurret2 =   KeyCode.Alpha2;
-    public KeyCode tTurret3 =   KeyCode.Alpha3;
-    public KeyCode tTurret4 =   KeyCode.Alpha4;
-    public KeyCode keyPad   =   KeyCode.KeypadEnter;
+    //Stores all the keys for each input that should perform an action
+    //GameStates
+    public KeyCode halfPause = KeyCode.C;
+    public KeyCode pause = KeyCode.X;
+    public KeyCode unpause = KeyCode.Z;
+    public KeyCode StartGame = KeyCode.E;
 
-    private KeyCode TestDie = KeyCode.F5;
+    //player turret selections and placements
+    public KeyCode tTurret1 = KeyCode.Alpha1;
+    public KeyCode tTurret2 = KeyCode.Alpha2;
+    public KeyCode tTurret3 = KeyCode.Alpha3;
+    public KeyCode tTurret4 = KeyCode.Alpha4;
+    public KeyCode place = KeyCode.Mouse1;
 
-	// Update is called once per frame
+    //player movement controls
+    public KeyCode walkForward = KeyCode.W;
+    public KeyCode walkBack = KeyCode.S;
+    public KeyCode walkLeft = KeyCode.A;
+    public KeyCode walkRight = KeyCode.D;
+    public KeyCode toggelRun = KeyCode.LeftShift;
+    public KeyCode slap = KeyCode.F;
+    public KeyCode shoot = KeyCode.V;
+    public KeyCode jump = KeyCode.Space;
+
+    //player state change controls
+    public KeyCode init = KeyCode.I;
+    public KeyCode idle = KeyCode.O;
+
+    //Dev controls
+    public KeyCode killTurret = KeyCode.B;
+    public KeyCode endGame = KeyCode.G;
+    public KeyCode killEnemy = KeyCode.V;
+
+    // Update is called once per frame
     delegate void PauseDelegate();
     delegate void NumberDelegate(int n);
-    public int num = 0; 
-
+    public int num = 0;
+    public bool paused = false;
     NumberDelegate numMultiDel;
-    
+
     void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player"); 
+        player = GameObject.FindGameObjectWithTag("Player");
+        goal = GameObject.FindGameObjectWithTag("Goal");
     }
     void Update()
     {
-        TurretPlacement.instance.TurretSelect(tTurret1, tTurret2, tTurret3, tTurret4); // Input for Turret
-
+        turretManager = GameObject.FindGameObjectWithTag("TurretManager");
+        turret = GameObject.FindGameObjectWithTag("MG");
+        Enemy = GameObject.FindGameObjectWithTag("Enemy");
+        turretManager = GameObject.FindGameObjectWithTag("TurretManager");
+        //Game State changes
         if (Input.GetKeyDown(halfPause))
         {
             /// Pause State Half (Update at Half speed)
-            GameManager.instance.Pause(GameManager.PauseState.Half);
+            GameManager.instance.Pause(PauseState.Half);
         }
 
         if (Input.GetKeyDown(pause))
         {
-            //numMultiDel = null;
-            //num++;
-            //numMultiDel += NumberPlusFive;
-            //numMultiDel += NumberSquared;
-            //numMultiDel(num);
-
-            GameManager.instance.Pause(GameManager.PauseState.Full);
+            if (!paused)
+            {
+                GameManager.instance.Pause(PauseState.Full);
+                print("pausing");
+                paused = !paused;
+                GameObject.FindGameObjectWithTag("Player").GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>().enabled = false;
+                HUDManager.instance.SetState("menu", true);
+            }
+            else
+            {
+                GameManager.instance.Pause(PauseState.None);
+                print("unpause");
+                paused = !paused;
+                GameObject.FindGameObjectWithTag("Player").GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>().enabled = true;
+                HUDManager.instance.SetState("menu", false);
+            }
         }
 
-        if(Input.GetKeyDown(pause))
-        {
-            GameManager.instance.Pause(GameManager.PauseState.None);
-        }
+
 
 
         ////Player States
-        if (Input.GetKeyDown(KeyCode.W)) //Walk forwrad
+        if (Input.GetKeyDown(walkForward)) //Walk forwrad
         {
             player.GetComponent<PlayerActions>().State(PlayerState.walk);
         }
 
-        if (Input.GetKeyDown(KeyCode.A)) //Walk to the left
+        if (Input.GetKeyDown(walkBack)) //Walk to the back
         {
             player.GetComponent<PlayerActions>().State(PlayerState.walk);
         }
 
-        if (Input.GetKeyDown(KeyCode.S)) //Walk backwards
+        if (Input.GetKeyDown(walkLeft)) //Walk left
         {
             player.GetComponent<PlayerActions>().State(PlayerState.walk);
         }
 
-        if (Input.GetKeyDown(KeyCode.D)) //Walk to the right
+        if (Input.GetKeyDown(walkRight)) //Walk to the right
         {
             player.GetComponent<PlayerActions>().State(PlayerState.walk);
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift)) //toggles run
+        if (Input.GetKeyDown(toggelRun)) //toggles run on
         {
             player.GetComponent<PlayerActions>().State(PlayerState.run);
         }
+        if (Input.GetKeyUp(toggelRun)) //toggles run off
+        {
+            player.GetComponent<PlayerActions>().State(PlayerState.walk);
+        }
 
-        if (Input.GetKeyDown(KeyCode.I)) //toggles idles
+        if (Input.GetKeyDown(idle)) //toggles idles
         {
             player.GetComponent<PlayerActions>().State(PlayerState.idle);
         }
 
-        if (Input.GetKeyDown(KeyCode.O)) //toggles init
+        if (Input.GetKeyDown(init)) //toggles init
         {
             player.GetComponent<PlayerActions>().State(PlayerState.init);
         }
 
+        ////Player turret Selction and placement
+        if (Input.GetKeyDown(tTurret1))
+        {
+            turretManager.GetComponent<TurretPlacement>().TurretSelect(tTurret1);
+        }
+        if (Input.GetKeyDown(tTurret2))
+        {
+            turretManager.GetComponent<TurretPlacement>().TurretSelect(tTurret2);
+        }
+        if (Input.GetKeyDown(tTurret3))
+        {
+            turretManager.GetComponent<TurretPlacement>().TurretSelect(tTurret3);
+        }
+        if (Input.GetKeyDown(tTurret4))
+        {
+            turretManager.GetComponent<TurretPlacement>().TurretSelect(tTurret4);
+        }
+
+        if (Input.GetKeyDown(place))
+        {
+            turretManager.GetComponent<TurretPlacement>().TurretPlacePoint();
+        }
+
         ////Player Actions
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(slap))
         {
             player.GetComponent<PlayerActions>().Slap();
         }
 
-        if (Input.GetKeyDown(KeyCode.V))
+        if (Input.GetKeyDown(shoot))
         {
             player.GetComponent<PlayerActions>().Shoot();
-        }     
-
-
-
-        // Test Only [Not in Final]
-        if(Input.GetKeyDown(TestDie))
-        {
-            // 
-            levelLoader.GetComponent<LevelLoader>().loadLevel("Outro");
         }
-    }       
+
+        if (Input.GetKeyDown(jump))
+        {
+            player.GetComponent<PlayerActions>().Jump();
+        }
+
+
+        /////Dev Controls
+        if (Input.GetKeyDown(killTurret))
+        {
+            turret.GetComponent<BaseTurret>().m_Health -= 101;
+        }
+        if (Input.GetKeyDown(killEnemy))
+        {
+            try
+            {
+                Enemy.GetComponent<EnemyStats>().m_Health -= 101;
+            }
+            catch
+            {
+                Debug.LogWarning("ther is no enemies :( ");
+            }
+        }
+        if (Input.GetKeyDown(endGame))
+        {
+            goal.GetComponent<GoalPoint>().m_Health -= 101;
+        }
+    }
 }

@@ -1,30 +1,33 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Grenade : Item, IPickup{
+public class Grenade : EquipmentStats
+{
 
     protected Rigidbody rb;
     [SerializeField]
-    protected Inventory inventory; //= GameObject.Find("FPSController").GetComponent<PlayerInventory>();
+    //protected Inventory inventory; //= GameObject.Find("FPSController").GetComponent<PlayerInventory>();
 
     float timer;
     float impactRadius;
     int damage;
 
-    public void PickUp()
+    public void OnTriggerEnter()
     {
         //print("Picked up a grenade");
-        inventory.items.Add(gameObject);
-        gameObject.transform.parent = inventory.transform;
-        gameObject.GetComponent<Rigidbody>().isKinematic = true;
-        //gameObject.SetActive(false);
+        //inventory.items.Add(gameObject);
+
+
+       // gameObject.transform.parent = inventory.transform;
+        //gameObject.GetComponent<Rigidbody>().isKinematic = true;
+        gameObject.SetActive(false);
         //inventory.grenades_reg++;
     }
 
 
     public void Drop()
     {
-        inventory.items.Remove(gameObject);
+        //inventory.items.Remove(gameObject);
         //inventory.grenades_reg--;
 
         transform.parent = null;
@@ -67,6 +70,7 @@ public class Grenade : Item, IPickup{
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        //rb = GetComponent<Rigidbody>();
+        Build();
     }
 }

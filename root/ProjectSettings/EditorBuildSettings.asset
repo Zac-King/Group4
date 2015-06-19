@@ -5,9 +5,17 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: Assets/Scenes/ddol.unity
+  - enabled: 0
+    path: Assets/Scenes/New.unity
+  - enabled: 0
+    path: Assets/Scenes/Quinton/gui.unity
   - enabled: 1
-    path: Assets/Scenes/Zac/Intro.unity
+    path: Assets/Scenes/start.unity
+  - enabled: 0
+    path: Assets/Scenes/main.unity
   - enabled: 1
-    path: Assets/Scenes/Zac/Level_00.unity
+    path: Assets/Scenes/exit.unity
   - enabled: 1
-    path: Assets/Scenes/Zac/Outro.unity
+    path: Assets/Scenes/Eric/Arena.unity

@@ -1,55 +1,91 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic; 
+using System.Collections.Generic;
 public class GameManager : Singleton<GameManager>
 {
-    // Game State possible  : <Enum>
-    public enum StateManager 
-    { 
-        INIT,
-        MAINMENU,
-        RUNNING,
-        EXIT
-    }
-    // Pause State rate     : <Enum>
-    public enum PauseState
-    {
-        Full,       // Update Halted
-        Half,       // Update at half speed
-        None,       // Update rate not effected
-    }
+
     [SerializeField]
     //public List<LevelStruct> Level = new List<LevelStruct>();
     public List<string> Levels = new List<string>();
 
     private bool transitionPossible;
-    private StateManager c_GameState;
-    private PauseState   c_PauseState;
-     
-    /// 
-    // 
+    [SerializeField]
+    private GameStates c_GameState;
+    [SerializeField]
+    private PauseState c_PauseState;
 
-    [ContextMenu("reset levels")]
+    /// Quick reset of levels List to empty
+    [ContextMenu("reset levels")]  
     public void ResetLevels()
     {
         Levels = new List<string>();
     }
+
     protected override void Awake()
     {
         transitionPossible = true;
-        c_GameState = StateManager.INIT;
-        base.Awake();           
+        c_GameState = GameStates.init;
+       
+        base.Awake();
+    }
+
+    /// Initialization
+    void Start()
+    {
+        c_GameState = GameStates.mainMenu;
+        c_PauseState = PauseState.None;
     }
 
     /// usage: GameManager.instance.Transition("Combat")
     public void Transition(string lev)
     {
+        print("hit");
+        if (lev == "start" || lev == "Start")
+        {
+            if (CheckTransition(GameStates.mainMenu) == true)
+            {
+                print("Transition hit");
+                LevelLoader.instance.loadLevel("start");
+                print(Application.loadedLevelName);
+            }
+        }
+
+        if (lev == "arena" || lev == "Arena")
+        {
+            if (CheckTransition(GameStates.gamePlay))
+            {
+                print("Transition hit");
+                LevelLoader.instance.loadLevel("Arena");
+                print(Application.loadedLevelName);
+            }
+        }
+
+        if (lev == "exit" || lev == "Exit")
+        {
+            if (CheckTransition(GameStates.gameOver) == true)
+            {
+                print("Transition hit");
+                LevelLoader.instance.loadLevel("exit");
+                print(Application.loadedLevelName);
+            }
+        }
+
+        if (lev == "close" || lev == "Close" || lev == "quit" || lev == "Quit")
+        {
+            if (CheckTransition(GameStates.close) == true)
+            {
+                print("Transition hit");
+                LevelLoader.instance.loadLevel("quit");
+            }
+        }
         
-        print("hit");   // test
-        print(Application.loadedLevelName);
+        else
+        {
+            print("No Transition");
+        }
     }
 
-    private bool CheckTransition(StateManager stateB)
+    private bool CheckTransition(GameStates stateB)
     {
         if (c_GameState == stateB)
         {
@@ -62,28 +98,47 @@ public class GameManager : Singleton<GameManager>
         {
             switch (c_GameState)
             {
-                // init to mainmenu check
-                case StateManager.INIT:
-                    if (stateB == StateManager.MAINMENU)
+                    
+                case GameStates.init:
+                    if (stateB == GameStates.mainMenu)
                         return true;
                     break;
-                // mainmenu to running check
-                case StateManager.MAINMENU:
-                    if (stateB == StateManager.RUNNING)
+
+                case GameStates.mainMenu:
+                    if (stateB == GameStates.gamePlay)
+                        return true;
+                    if (stateB == GameStates.close)
                         return true;
                     break;
-                // running back to mainmenu 
-                case StateManager.RUNNING:
-                    if (stateB == StateManager.MAINMENU)
+
+                case GameStates.gamePlay:
+                    if (stateB == GameStates.pause)
                         return true;
-                    if (stateB == StateManager.EXIT)
+                    if (stateB == GameStates.gameOver)
                         return true;
                     break;
-                // Default
+
+                case GameStates.pause:
+                    if (stateB == GameStates.mainMenu)
+                        return true;
+                    if (stateB == GameStates.gamePlay)
+                        return true;
+                    if (stateB == GameStates.close)
+                        return true;
+                    break;
+
+                case GameStates.gameOver:
+                    if (stateB == GameStates.close)
+                        return true;
+                    break;
+
                 default:
                     break;
             }
+            // if not valid path return false
 
+            print("invalid trans from " + c_GameState + " ---> " + stateB);
+            print("Transistion Check Failed. Check returned: False");
             return false;
         }
     }
@@ -94,39 +149,33 @@ public class GameManager : Singleton<GameManager>
         switch (state)
         {
             case PauseState.None:
-                { Time.timeScale = 1; debugtext = "Full Update"; }
+                c_PauseState = PauseState.None;
+                Time.timeScale = 1;
+                debugtext = "Full Update";
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked; 
                 break;
+
             case PauseState.Half:
-                { Time.timeScale = 0.5f; debugtext = "Half Update"; }
+                c_PauseState = PauseState.Half;
+                Time.timeScale = 0.5f;
+                debugtext = "Half Update";
                 break;
+
             case PauseState.Full:
-                { Time.timeScale = 0; debugtext = "Update Halfed"; }
+                c_PauseState = PauseState.Full;
+                Time.timeScale = 0;
+                debugtext = "Update Halfed";
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.Confined;                
                 break;
-            default: break;
+
+            default: 
+                break;
         }
         // Debug
         print("Pause function hit. State triggered: " + debugtext);
+        print(Time.timeScale);
     }
 
-	// Use this for initialization
-	void Start () 
-    {
-        c_GameState  = StateManager.MAINMENU;
-        c_PauseState = PauseState.None;
-	}
-	
-	// Update is called once per frame
-	void Update () 
-    {
-
-	}
-
-    [ContextMenu("do the thing i said to do")]
-    public void doIt()
-    {
-        GameObject blah = new GameObject();
-        blah.name = "doit";
-        Instantiate(blah);
-        print("do it dude make a go");
-    }
 }

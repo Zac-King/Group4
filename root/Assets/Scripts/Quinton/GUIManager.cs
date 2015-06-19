@@ -8,12 +8,14 @@ public class GUIManager : Singleton<GUIManager>
 
     public void ChangeLvlTo(string name)
     {
-        //gameManager Function for changing scene(Level)
+       ///
+
     }
 
     public void ExitGame()
     {
         //gameManager Function for leaving
+     
     }
 
 
@@ -25,6 +27,18 @@ public class GUIManager : Singleton<GUIManager>
     public void SetState(GameObject go, bool state)
     {
         go.SetActive(state);
+    }
+
+    /// <summary>
+    /// Pass in a GameObject if its on itll turn off if its off itll turn on.
+    /// </summary>
+    /// <param name="go"></param>
+    public void SetState(GameObject go)
+    {
+        if (go.activeSelf == true)
+            SetState(go, false);
+        else
+            SetState(go, true);
     }
 
 

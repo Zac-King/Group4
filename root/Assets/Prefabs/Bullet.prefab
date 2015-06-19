@@ -119,9 +119,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb0520cc8d5fd34498160da05d44f89b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mySpeed: 10
-  maxDistance: 10
+  BB: []
+  enemy: {fileID: 0}
+  throwPower: 25
+  bDamage: 10
   isFired: 1
+  doDmg: 0
 --- !u!135 &13524286
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -129,7 +132,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 102918}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: .5

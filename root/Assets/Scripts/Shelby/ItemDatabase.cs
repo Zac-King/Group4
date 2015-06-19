@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-public class ItemDatabase : MonoBehaviour 
+
+public class ItemDatabase : Database
 {
-    public List<GameObject> database; 
+    public int scraps, scraps_special;
+
 }

@@ -4,35 +4,36 @@ using System.Collections.Generic;
 
 public class OnCollisionPickUp : MonoBehaviour
 {
+    public ItemDatabase pInventory;
 
-    Inventory inventory;
-
-    void Awake()
+    void Start()
     {
-        inventory = gameObject.GetComponentInChildren<Inventory>();
-        DontDestroyOnLoad(gameObject);
+        pInventory = GameObject.Find("PlayerInventory").GetComponent<ItemDatabase>();
+        //DontDestroyOnLoad(gameObject);
     }
 
-    
-    //void onTriggerEnter(Collider other)
-    void OnControllerColliderHit(ControllerColliderHit other)
+
+    void OnTriggerEnter(Collider other)
     {
         switch (other.gameObject.tag)
         {
             case "Resource":
-                int scrapValue = other.gameObject.GetComponent<Resource>().value;
+                int n_scraps = other.gameObject.GetComponent<Resource>().value;
                 // resource objects have different values
-                if (scrapValue >= 5)
-                    inventory.scraps_special += scrapValue;
-                else if (scrapValue < 5)
-                    inventory.scraps += scrapValue;
-                    
-                Object.Destroy(other.gameObject);
+                if (n_scraps >= 11)
+                    pInventory.scraps_special += 1;
+                else
+                    pInventory.scraps += n_scraps;
+
+                other.gameObject.GetComponent<IPickup>().PickUp();
+                //Destroy(other.gameObject);
                 break;
             case "Item":
-                //items will always have a playerinventory script attached to them
-                //gameObject.GetComponentInChildren<Inventory>().items.Add(gameObject);
+                ShelbyDatabase.instance.AddSingleItem(other.gameObject, pInventory);
+                other.transform.parent = pInventory.transform;
+                other.transform.localPosition = Vector3.zero;
                 other.gameObject.GetComponent<IPickup>().PickUp();
+
                 break;
             default: break;
         }
@@ -46,23 +47,6 @@ public class OnCollisionPickUp : MonoBehaviour
         //    other.gameObject.transform.localPosition = new Vector3(0, 1, 2);
 
         //    print("Picked up " + other.gameObject.name);
-        //}
-
-        //if (other.gameObject.GetComponent<MiscTags>().mTag01 == "Resource")
-        //{
-        //    print("Resource");
-        //    if (other.gameObject.GetComponent<MiscTags>().mTag02 == "Scrap")
-        //    {
-        //        print("Scrap");
-        //        //Object.Destroy(other.gameObject);
-        //        //gameObject.GetComponent<PlayerInventory>().scraps++;
-        //    }
-        //    else
-        //    {
-        //        print("Special Scrap");
-        //        //Object.Destroy(other.gameObject);
-        //        //gameObject.GetComponent<PlayerInventory>().scraps_special++;
-        //    }
         //}
     }
 }

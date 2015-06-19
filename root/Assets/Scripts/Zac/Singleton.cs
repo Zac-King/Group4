@@ -35,7 +35,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
             //since we are inheriting why we no get it?
             _instance = this.gameObject.GetComponent<T>();
             //_instance = GameObject.FindObjectOfType<T>();
-            print(instance.name);
+            //print(instance.name);
             DontDestroyOnLoad(_instance);
         }
         else
